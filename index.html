@@ -271,6 +271,131 @@
     .content-wrap { padding: 16px; }
     @page { margin: 15mm; }
   }
+
+  /* ── PRINT VIEW TAB ── */
+  .pv-actions {
+    display: flex; gap: 12px; align-items: center; margin-bottom: 20px;
+    padding: 14px 18px; background: var(--purple-light);
+    border-radius: 10px; border: 1px solid var(--purple-mid);
+  }
+  .pv-actions p { font-size: 13px; color: var(--text-dark); flex: 1; margin: 0; }
+  .pv-print-btn {
+    background: var(--purple); color: var(--white);
+    border: none; border-radius: 8px;
+    padding: 10px 20px; font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    white-space: nowrap;
+  }
+  .pv-print-btn:hover { background: var(--purple-dark); }
+
+  .pv-cover {
+    background: var(--purple); color: var(--white);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 24px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pv-cover h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .pv-cover p  { font-size: 13px; opacity: 0.85; margin: 0; }
+
+  .print-week-page {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+
+  .pv-week-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .pv-week-circle {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--purple); color: var(--white);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; text-transform: uppercase; flex-shrink: 0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pv-week-circle span { font-size: 22px; font-weight: 800; line-height: 1; }
+  .pv-week-circle.pv-done { background: var(--green); }
+  .pv-week-info { flex: 1; }
+  .pv-week-title { font-size: 22px; font-weight: 800; color: var(--text-dark); }
+  .pv-week-meta  { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+  .pv-week-status { font-size: 28px; font-weight: 800; }
+
+  .pv-progress {
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pv-progress-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+  .pv-progress-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .pv-progress-fill { height: 100%; background: var(--purple); border-radius: 4px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pv-progress-fill.pv-fill-done { background: var(--green); }
+  .pv-progress-count { font-size: 12px; font-weight: 700; color: var(--purple); white-space: nowrap; }
+
+  .pv-course-list { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .pv-course-list thead th {
+    background: var(--purple); color: var(--white);
+    padding: 9px 12px; font-weight: 700; text-align: left;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pv-course-list tbody tr:nth-child(even) { background: var(--bg-stripe);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pv-course-list tbody td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+
+  .pv-checkbox {
+    width: 22px; height: 22px;
+    border: 2.5px solid #aaa;
+    border-radius: 4px; display: inline-block;
+    background: var(--white); position: relative;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pv-checkbox.pv-checked {
+    background: var(--purple); border-color: var(--purple);
+  }
+  .pv-checkbox.pv-checked::after {
+    content: '✓';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: white; font-size: 14px; font-weight: 800; line-height: 1;
+  }
+  .pv-col-check { width: 44px; text-align: center; }
+  .pv-col-dur   { width: 80px; color: var(--text-muted); white-space: nowrap; }
+  .pv-col-level { width: 80px; }
+
+  .pv-page-footer {
+    display: none;
+    margin-top: 20px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 10px; color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── PRINT MEDIA OVERRIDES FOR PRINT VIEW ── */
+  @media print {
+    body.print-mode .doc-banner     { display: none; }
+    body.print-mode .global-progress { display: none; }
+    body.print-mode .tab-nav-wrap   { display: none !important; }
+    body.print-mode .tab-panel:not(#tab-print) { display: none !important; }
+    body.print-mode #tab-print      { display: block !important; }
+    body.print-mode .pv-actions     { display: none; }
+    body.print-mode .pv-cover       { display: none; }
+    body.print-mode .content-wrap   { padding: 0; max-width: 100%; }
+
+    .print-week-page {
+      border: none; border-radius: 0;
+      padding: 16px 0; margin: 0;
+      page-break-after: always;
+      break-after: page;
+    }
+    .print-week-page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .pv-page-footer { display: block; }
+    @page { margin: 12mm 15mm; size: A4; }
+  }
 </style>
 </head>
 <body>
@@ -306,6 +431,7 @@
     <button class="tab-btn" data-tab="w8" data-week="w8" onclick="showTab('w8')" role="tab"><span class="week-dot" id="dot-w8">8</span>Week 8</button>
     <button class="tab-btn" data-tab="w9" data-week="w9" onclick="showTab('w9')" role="tab"><span class="week-dot" id="dot-w9">9</span>Week 9</button>
     <button class="tab-btn" data-tab="summary" onclick="showTab('summary')" role="tab">Full Summary</button>
+    <button class="tab-btn" data-tab="print" onclick="showTab('print')" role="tab">Print View</button>
   </nav>
 </div>
 
@@ -767,6 +893,22 @@
   </div>
 </div>
 
+
+<!-- ═══════════════════════════════════════
+     PRINT VIEW
+════════════════════════════════════════ -->
+<div id="tab-print" class="tab-panel">
+  <div class="pv-actions">
+    <p>One A4 page per week — print or save as PDF to track progress offline. Your current completion state is reflected automatically.</p>
+    <button class="pv-print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+  <div class="pv-cover">
+    <h2>Canva Work Experience — Study Plan</h2>
+    <p>Front End Web Development Track &nbsp;·&nbsp; 9 Weeks &nbsp;·&nbsp; ~37 hrs</p>
+  </div>
+  <div id="pv-weeks"></div>
+</div>
+
 </div><!-- /content-wrap -->
 
 <div class="doc-footer">
@@ -797,6 +939,90 @@
   }
   function setCompleted(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // ── PRINT VIEW ────────────────────────────────────────────
+  const WEEK_META = {
+    w1: { title: 'HTML Foundations',               meta: 'Phase: HTML · ~5.5 hrs · 2 courses' },
+    w2: { title: 'CSS Styling',                     meta: 'Phase: CSS · ~5 hrs · 2 courses' },
+    w3: { title: 'Layout, DevTools & Mobile',       meta: 'Phase: CSS · ~3 hrs · 3 courses' },
+    w4: { title: 'Tables, Forms & Selectors',       meta: 'Phase: HTML, CSS · ~5.5 hrs · 3 courses' },
+    w5: { title: 'Accessibility, Git & JS Start',   meta: 'Phase: CSS, JS · ~3.5 hrs · 3 courses' },
+    w6: { title: 'JS Basics, Numbers & Functions',  meta: 'Phase: JS · ~5.5 hrs · 3 courses' },
+    w7: { title: 'Loops, Arrays & Objects',         meta: 'Phase: JS · ~5 hrs · 3 courses' },
+    w8: { title: 'DOM, Interactivity & OOP',        meta: 'Phase: JS · ~5.5 hrs · 3 courses' },
+    w9: { title: 'Data, Bootstrap & Portfolio',     meta: 'Phase: JS, CSS · ~4.5 hrs · 4 courses' },
+  };
+
+  function buildPrintView() {
+    const completed = getCompleted();
+    const container = document.getElementById('pv-weeks');
+    if (!container) return;
+    container.innerHTML = '';
+
+    Object.entries(WEEK_COURSES).forEach(([wk, courseIds]) => {
+      const wkNum = wk.replace('w', '');
+      const meta = WEEK_META[wk];
+      const done = courseIds.filter(id => completed[id]).length;
+      const total = courseIds.length;
+      const allDone = done === total;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      const courseRows = courseIds.map(id => {
+        const existingRow = document.querySelector(`#tab-${wk} tr[data-course="${id}"]`);
+        let name = id, duration = '', level = '';
+        if (existingRow) {
+          const nameEl = existingRow.querySelector('td:nth-child(2)');
+          const durEl  = existingRow.querySelector('.col-dur');
+          const lvlEl  = existingRow.querySelector('.col-level');
+          if (nameEl) name = nameEl.textContent.trim();
+          if (durEl)  duration = durEl.textContent.trim();
+          if (lvlEl)  level = lvlEl.textContent.trim();
+        }
+        const isChecked = !!completed[id];
+        return `<tr>
+          <td class="pv-col-check"><div class="pv-checkbox${isChecked ? ' pv-checked' : ''}"></div></td>
+          <td>${name}</td>
+          <td class="pv-col-dur">${duration}</td>
+          <td class="pv-col-level"><span class="badge">${level}</span></td>
+        </tr>`;
+      }).join('');
+
+      const statusColor = allDone ? 'var(--green)' : 'var(--border)';
+      const statusSymbol = allDone ? '✓' : '○';
+
+      const page = document.createElement('div');
+      page.className = 'print-week-page';
+      page.innerHTML = `
+        <div class="pv-week-header">
+          <div class="pv-week-circle${allDone ? ' pv-done' : ''}">Week<span>${wkNum}</span></div>
+          <div class="pv-week-info">
+            <div class="pv-week-title">${meta.title}</div>
+            <div class="pv-week-meta">${meta.meta}</div>
+          </div>
+          <div class="pv-week-status" style="color:${statusColor}">${statusSymbol}</div>
+        </div>
+        <div class="pv-progress">
+          <span class="pv-progress-label">Progress</span>
+          <div class="pv-progress-bar-wrap">
+            <div class="pv-progress-fill${allDone ? ' pv-fill-done' : ''}" style="width:${pct}%"></div>
+          </div>
+          <span class="pv-progress-count">${done} / ${total} done</span>
+        </div>
+        <table class="pv-course-list">
+          <thead><tr>
+            <th class="pv-col-check">Done</th>
+            <th>Course</th>
+            <th class="pv-col-dur">Duration</th>
+            <th class="pv-col-level">Level</th>
+          </tr></thead>
+          <tbody>${courseRows}</tbody>
+        </table>
+        <div class="pv-page-footer">
+          Canva Work Experience &nbsp;·&nbsp; Front End Web Development Track &nbsp;·&nbsp; Week ${wkNum} of 9
+        </div>`;
+      container.appendChild(page);
+    });
   }
 
   // ── RENDER ────────────────────────────────────────────────
@@ -893,6 +1119,8 @@
       btn.setAttribute('aria-selected', 'true');
       btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
+    document.body.classList.toggle('print-mode', id === 'print');
+    if (id === 'print') buildPrintView();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     try { localStorage.setItem(TAB_KEY, id); } catch {}
   }
