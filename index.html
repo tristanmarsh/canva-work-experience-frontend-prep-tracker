@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canva Work Experience — Study Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --purple:       #7B2FBE;
+    --purple-light: #EDE0F8;
+    --purple-mid:   #C9A5E8;
+    --purple-dark:  #5A1F8C;
+    --text-dark:    #1A1A2E;
+    --text-body:    #444444;
+    --text-muted:   #777777;
+    --bg-stripe:    #F7F2FC;
+    --bg-gray:      #F5F5F5;
+    --border:       #E0E0E0;
+    --white:        #FFFFFF;
+    --green:        #1A7F4B;
+    --green-light:  #E6F4ED;
+    --orange:       #E07B00;
+    --orange-light: #FFF5E6;
+    --red:          #C0392B;
+    --red-light:    #FDECEA;
+    --tab-h:        56px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-body);
+    background: var(--bg-gray);
+    line-height: 1.6;
+  }
+
+  /* ── BANNER ── */
+  .doc-banner {
+    background: var(--purple);
+    padding: 28px 40px 20px;
+  }
+  .doc-banner .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 10px;
+  }
+  .doc-banner h1 { font-size: 30px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+  .doc-banner .subtitle { font-size: 15px; color: rgba(255,255,255,0.8); }
+
+  /* ── GLOBAL PROGRESS ── */
+  .global-progress {
+    background: var(--purple-dark);
+    padding: 12px 40px;
+  }
+  .gp-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .gp-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .gp-bar-wrap { flex: 1; min-width: 120px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
+  .gp-bar { height: 100%; background: var(--white); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .gp-count { font-size: 13px; font-weight: 700; color: var(--white); white-space: nowrap; }
+  .gp-pct { font-size: 12px; color: rgba(255,255,255,0.6); white-space: nowrap; }
+
+  /* ── TAB NAV ── */
+  .tab-nav-wrap {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 2px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .tab-nav {
+    display: flex;
+    max-width: 960px; margin: 0 auto;
+    padding: 0 16px;
+    overflow-x: auto; scrollbar-width: none;
+    background:
+      linear-gradient(to right,  var(--white) 0%, transparent 48px) left  / 48px 100% no-repeat local,
+      linear-gradient(to left,   var(--white) 0%, transparent 48px) right / 48px 100% no-repeat local,
+      linear-gradient(to right,  rgba(0,0,0,0.08) 0%, transparent 48px) left  / 48px 100% no-repeat scroll,
+      linear-gradient(to left,   rgba(0,0,0,0.08) 0%, transparent 48px) right / 48px 100% no-repeat scroll,
+      var(--white);
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 0 16px; height: var(--tab-h);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-muted);
+    background: none; border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tab-btn:hover { color: var(--purple); }
+  .tab-btn.active { color: var(--purple); border-bottom-color: var(--purple); }
+  .week-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--purple-light); color: var(--purple);
+    font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s, color 0.2s;
+  }
+  .tab-btn.active .week-dot { background: var(--purple); color: var(--white); }
+  .week-dot.done { background: var(--green) !important; color: var(--white) !important; font-size: 12px; }
+
+  /* ── CONTENT ── */
+  .content-wrap { max-width: 960px; margin: 0 auto; padding: 32px 40px 64px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card { background: var(--white); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; border: 1px solid var(--border); }
+  .card-title { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+
+  /* ── WEEK HEADER ── */
+  .week-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .week-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--purple); color: var(--white);
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .week-circle span { font-size: 18px; letter-spacing: 0; }
+  .week-title { font-size: 22px; font-weight: 800; color: var(--text-dark); }
+  .week-meta { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── WEEK PROGRESS ── */
+  .week-progress { margin-bottom: 20px; }
+  .wp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .wp-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .wp-count { font-size: 12px; font-weight: 700; color: var(--purple); }
+  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--purple); border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+  .progress-fill.done { background: var(--green); }
+
+  /* ── HEADINGS ── */
+  h2 { font-size: 17px; font-weight: 700; color: var(--text-dark); margin: 24px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--purple-light); }
+  h3 { font-size: 14px; font-weight: 700; color: var(--purple); margin: 18px 0 8px; }
+
+  p { margin-bottom: 10px; }
+  strong { color: var(--text-dark); }
+  a { color: var(--purple); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── CALLOUTS ── */
+  .callout { border-left: 4px solid var(--purple); background: var(--purple-light); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0 18px; }
+  .callout.green  { border-left-color: var(--green);  background: var(--green-light); }
+  .callout.tip    { border-left-color: var(--orange); background: var(--orange-light); }
+  .callout.skip   { border-left-color: var(--red);    background: var(--red-light); }
+  .callout p { margin-bottom: 5px; font-size: 13px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .callout-title { font-weight: 700; font-size: 13px; margin-bottom: 5px; color: var(--purple); }
+  .callout.green  .callout-title { color: var(--green); }
+  .callout.tip    .callout-title { color: var(--orange); }
+  .callout.skip   .callout-title { color: var(--red); }
+  .callout ul { padding-left: 16px; }
+  .callout ul li { margin-bottom: 3px; font-size: 13px; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 13px; }
+  thead th { background: var(--purple); color: var(--white); font-weight: 600; padding: 9px 12px; text-align: left; font-size: 12px; }
+  tbody tr:nth-child(even) { background: var(--bg-stripe); }
+  tbody tr:nth-child(odd)  { background: var(--white); }
+  tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tfoot td { padding: 9px 12px; font-weight: 700; background: var(--bg-gray); color: var(--text-dark); }
+
+  .col-check { width: 44px; text-align: center; }
+  .col-dur   { width: 90px; text-align: center; color: var(--text-muted); }
+  .col-level { width: 100px; text-align: center; }
+
+  /* ── CUSTOM CHECKBOX ── */
+  .course-check {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border: 2px solid var(--purple-mid);
+    border-radius: 4px;
+    background: var(--white);
+    cursor: pointer;
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+    vertical-align: middle;
+  }
+  .course-check:hover { border-color: var(--purple); }
+  .course-check:checked { background: var(--purple); border-color: var(--purple); }
+  .course-check:checked::after {
+    content: '';
+    width: 5px; height: 9px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    position: absolute;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+
+  /* ── COMPLETED ROW ── */
+  tr.row-done { background: var(--green-light) !important; }
+  tr.row-done td { color: var(--text-muted); }
+  tr.row-done a { color: var(--green); text-decoration: line-through; }
+  tr.row-done .badge { opacity: 0.6; }
+
+  /* ── BADGES ── */
+  .badge       { display: inline-block; background: var(--green-light); color: var(--green); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; }
+  .badge.inter { background: var(--orange-light); color: var(--orange); }
+  .phase-label { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .phase-html  { background: #FFF0E0; color: #B35900; }
+  .phase-css   { background: #E0F0FF; color: #0057B3; }
+  .phase-js    { background: #E8F8EF; color: #1A7F4B; }
+
+  /* ── OVERVIEW GRID ── */
+  .week-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0 24px; }
+  .week-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .week-card:hover { border-color: var(--purple); box-shadow: 0 2px 10px rgba(123,47,190,0.12); }
+  .week-card.card-done { border-color: var(--green); background: var(--green-light); }
+  .wk-num { font-size: 11px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .week-card.card-done .wk-num { color: var(--green); }
+  .wk-title { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+  .wk-hrs { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .wk-phases { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+  .wk-completion { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+  .wk-completion.in-progress { color: var(--orange); }
+  .wk-completion.all-done    { color: var(--green); }
+
+  /* ── COMPARE ── */
+
+
+  /* ── SCRATCH TABLE ── */
+  .scratch-table thead th:first-child { background: #5A1F8C; }
+  .scratch-table thead th:last-child  { background: var(--green); }
+  .scratch-table td:last-child { font-family: 'Courier New', monospace; font-size: 12px; color: var(--purple); }
+
+  /* ── NAV BUTTONS ── */
+  .week-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .nav-btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--purple); background: var(--purple-light); border: none; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+  .nav-btn:hover { background: var(--purple-mid); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-btn.primary { background: var(--purple); color: var(--white); }
+  .nav-btn.primary:hover { background: var(--purple-dark); }
+  .week-position { font-size: 12px; color: var(--text-muted); }
+
+  /* ── FOOTER ── */
+  .doc-footer { max-width: 960px; margin: 0 auto; padding: 0 40px 32px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); }
+  .doc-footer strong { color: var(--purple); }
+
+  /* ── PRINT ── */
+  @media print {
+    .tab-nav-wrap { display: none; }
+    .tab-panel { display: block !important; }
+    .week-nav { display: none; }
+    .global-progress { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .doc-banner { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: white; }
+    .content-wrap { padding: 16px; }
+    @page { margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="doc-banner">
+  <div class="tag">Standard Track</div>
+  <h1>Canva Work Experience</h1>
+  <div class="subtitle">Software Engineering Pre-Work Study Plan &nbsp;·&nbsp; Front End Web Development Track (Flexbox &amp; Grid skipped)</div>
+</div>
+
+<!-- GLOBAL PROGRESS BAR -->
+<div class="global-progress">
+  <div class="gp-inner">
+    <span class="gp-label">Overall progress</span>
+    <div class="gp-bar-wrap"><div class="gp-bar" id="gp-bar"></div></div>
+    <span class="gp-count"><span id="gp-count">0</span> / 25 courses</span>
+    <span class="gp-pct">(<span id="gp-pct">0</span>%)</span>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav-wrap">
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="overview" onclick="showTab('overview')" role="tab" aria-selected="true">Overview</button>
+    <button class="tab-btn" data-tab="w1" data-week="w1" onclick="showTab('w1')" role="tab"><span class="week-dot" id="dot-w1">1</span>Week 1</button>
+    <button class="tab-btn" data-tab="w2" data-week="w2" onclick="showTab('w2')" role="tab"><span class="week-dot" id="dot-w2">2</span>Week 2</button>
+    <button class="tab-btn" data-tab="w3" data-week="w3" onclick="showTab('w3')" role="tab"><span class="week-dot" id="dot-w3">3</span>Week 3</button>
+    <button class="tab-btn" data-tab="w4" data-week="w4" onclick="showTab('w4')" role="tab"><span class="week-dot" id="dot-w4">4</span>Week 4</button>
+    <button class="tab-btn" data-tab="w5" data-week="w5" onclick="showTab('w5')" role="tab"><span class="week-dot" id="dot-w5">5</span>Week 5</button>
+    <button class="tab-btn" data-tab="w6" data-week="w6" onclick="showTab('w6')" role="tab"><span class="week-dot" id="dot-w6">6</span>Week 6</button>
+    <button class="tab-btn" data-tab="w7" data-week="w7" onclick="showTab('w7')" role="tab"><span class="week-dot" id="dot-w7">7</span>Week 7</button>
+    <button class="tab-btn" data-tab="w8" data-week="w8" onclick="showTab('w8')" role="tab"><span class="week-dot" id="dot-w8">8</span>Week 8</button>
+    <button class="tab-btn" data-tab="w9" data-week="w9" onclick="showTab('w9')" role="tab"><span class="week-dot" id="dot-w9">9</span>Week 9</button>
+    <button class="tab-btn" data-tab="summary" onclick="showTab('summary')" role="tab">Full Summary</button>
+  </nav>
+</div>
+
+<div class="content-wrap">
+
+<!-- ═══════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-panel active">
+
+  <div class="card">
+    <div class="card-title">About This Plan</div>
+    <p>This plan follows Treehouse's official <a href="https://teamtreehouse.com/tracks/front-end-web-development" target="_blank">Front End Web Development track</a> — a 41-hour curriculum — with one change: the two intermediate CSS courses have been removed to keep the plan achievable within two months.</p>
+    <p>It covers HTML, CSS, JavaScript, Git, and Bootstrap, requiring roughly <strong>4 hours per week</strong>.</p>
+    <div class="callout skip" style="margin-top:14px">
+      <div class="callout-title">Two courses removed from the official track</div>
+      <ul>
+        <li><strong>CSS Flexbox Layout</strong> (1 hr 45 min) — Intermediate</li>
+        <li><strong>CSS Grid Layout</strong> (1 hr 51 min) — Intermediate</li>
+      </ul>
+      <p style="margin-top:8px;font-size:12px;color:var(--text-muted)">If you're flying through the plan, Flexbox is the one to add back — it's very commonly used in real codebases including Canva's.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">How to get the most out of this plan</div>
+    <p>The most important thing to know: <strong>don't just watch the videos.</strong> Watching someone write code and actually writing it yourself are completely different experiences — your fingers need to learn this too.</p>
+    <p style="margin-top:10px">As each video shows something new, pause it and type it out yourself. Make it work. Then break it on purpose and see what happens. That moment of "oh, that's why" only comes from doing it, not watching it.</p>
+    <div class="callout tip" style="margin-top:14px">
+      <div class="callout-title">A simple habit that makes a huge difference</div>
+      <ul style="padding-left:18px;margin-top:4px">
+        <li style="margin-bottom:5px"><strong>Keep a code file open alongside every video.</strong> Type out each example as it appears — even if you're just copying what's on screen.</li>
+        <li style="margin-bottom:5px"><strong>Change something.</strong> Once an example works, tweak a value, rename something, try a variation. This is where real understanding happens.</li>
+        <li><strong>If you're confused, rewind — not Google.</strong> The answer is almost always two minutes back in the video. Give it another watch before searching.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">All 9 Weeks — click to jump to any week</div>
+    <div class="week-grid">
+      <div class="week-card" data-week="w1" onclick="showTab('w1')"><div class="wk-num">Week 1</div><div class="wk-title">HTML Foundations</div><div class="wk-hrs">~5.5 hrs · 2 courses</div><div class="wk-phases"><span class="phase-label phase-html">HTML</span></div><div class="wk-completion" id="wc-w1">0/2</div></div>
+      <div class="week-card" data-week="w2" onclick="showTab('w2')"><div class="wk-num">Week 2</div><div class="wk-title">CSS Styling</div><div class="wk-hrs">~5 hrs · 2 courses</div><div class="wk-phases"><span class="phase-label phase-css">CSS</span></div><div class="wk-completion" id="wc-w2">0/2</div></div>
+      <div class="week-card" data-week="w3" onclick="showTab('w3')"><div class="wk-num">Week 3</div><div class="wk-title">Layout, DevTools &amp; Mobile</div><div class="wk-hrs">~3 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-css">CSS</span></div><div class="wk-completion" id="wc-w3">0/3</div></div>
+      <div class="week-card" data-week="w4" onclick="showTab('w4')"><div class="wk-num">Week 4</div><div class="wk-title">Tables, Forms &amp; Selectors</div><div class="wk-hrs">~5.5 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-html">HTML</span><span class="phase-label phase-css">CSS</span></div><div class="wk-completion" id="wc-w4">0/3</div></div>
+      <div class="week-card" data-week="w5" onclick="showTab('w5')"><div class="wk-num">Week 5</div><div class="wk-title">Accessibility, Git &amp; JS Start</div><div class="wk-hrs">~3.5 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-css">CSS</span><span class="phase-label phase-js">JS</span></div><div class="wk-completion" id="wc-w5">0/3</div></div>
+      <div class="week-card" data-week="w6" onclick="showTab('w6')"><div class="wk-num">Week 6</div><div class="wk-title">JS Basics, Numbers &amp; Functions</div><div class="wk-hrs">~5.5 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-js">JS</span></div><div class="wk-completion" id="wc-w6">0/3</div></div>
+      <div class="week-card" data-week="w7" onclick="showTab('w7')"><div class="wk-num">Week 7</div><div class="wk-title">Loops, Arrays &amp; Objects</div><div class="wk-hrs">~5 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-js">JS</span></div><div class="wk-completion" id="wc-w7">0/3</div></div>
+      <div class="week-card" data-week="w8" onclick="showTab('w8')"><div class="wk-num">Week 8</div><div class="wk-title">DOM, Interactivity &amp; OOP</div><div class="wk-hrs">~5.5 hrs · 3 courses</div><div class="wk-phases"><span class="phase-label phase-js">JS</span></div><div class="wk-completion" id="wc-w8">0/3</div></div>
+      <div class="week-card" data-week="w9" onclick="showTab('w9')"><div class="wk-num">Week 9</div><div class="wk-title">Data, Bootstrap &amp; Portfolio</div><div class="wk-hrs">~4.5 hrs · 4 courses</div><div class="wk-phases"><span class="phase-label phase-js">JS</span><span class="phase-label phase-css">CSS</span></div><div class="wk-completion" id="wc-w9">0/4</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">From Scratch to Real Code</div>
+    <p>You've already learned a lot through <a href="https://scratch.mit.edu/" target="_blank">Scratch</a>. Here's how that thinking maps directly to JavaScript:</p>
+    <table class="scratch-table" style="margin-top:12px">
+      <thead><tr><th>In Scratch you used…</th><th>In JavaScript this becomes…</th></tr></thead>
+      <tbody>
+        <tr><td>Events ("when green flag clicked")</td><td>addEventListener("click", ...)</td></tr>
+        <tr><td>Variables (orange blocks)</td><td>let score = 0;</td></tr>
+        <tr><td>If / else conditional blocks</td><td>if (score > 10) { ... }</td></tr>
+        <tr><td>Repeat / forever loops</td><td>for loops and while loops</td></tr>
+        <tr><td>Broadcast &amp; receive messages</td><td>Functions calling other functions</td></tr>
+        <tr><td>Sprites &amp; costumes</td><td>HTML elements styled with CSS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /overview -->
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 1
+════════════════════════════════════════ -->
+<div id="tab-w1" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>1</span></div>
+      <div><div class="week-title">HTML Foundations</div><div class="week-meta">Phase: <span class="phase-label phase-html">HTML</span> &nbsp;·&nbsp; ~5.5 hrs &nbsp;·&nbsp; 2 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w1">0 / 2 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w1"></div></div>
+    </div>
+    <p>HTML is the skeleton of every web page — it defines structure and content before any styling is applied. Every web developer starts here, and after this week you'll be able to read and write the source code of any webpage.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="intro-html-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="intro-html-css" aria-label="Mark Introduction to HTML and CSS as complete"></td><td><a href="https://teamtreehouse.com/library/introduction-to-html-and-css" target="_blank">Introduction to HTML and CSS</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="html-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-basics" aria-label="Mark HTML Basics as complete"></td><td><a href="https://teamtreehouse.com/library/html-basics" target="_blank">HTML Basics</a></td><td class="col-dur">~3 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5.5 hrs</td><td></td></tr></tfoot>
+    </table>
+    <div class="callout green"><div class="callout-title">Challenge after Week 1</div><p>Build a simple fan page for your favourite game using only HTML — headings, a paragraph, an image, and some links. No CSS yet! Pick something you're into: <strong>FNAF</strong>, <strong>Jurassic Park</strong>, a favourite band, movie — whatever you like.</p><p style="margin-top:10px">To get started, try one of these:</p><ul style="margin-top:6px;padding-left:18px;font-size:13px"><li style="margin-bottom:5px"><strong>In the browser (easiest):</strong> Go to <a href="https://codesandbox.io/" target="_blank">codesandbox.io</a>, create a new "Static" sandbox, and edit the <code>index.html</code> file — your page appears live on the right.</li><li><strong>On your computer:</strong> Download <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>, create a file called <code>index.html</code>, write your HTML, and open it in your browser to see it.</li></ul></div>
+  </div>
+  <div class="card">
+    <h2>What You'll Learn</h2>
+    <ul style="padding-left:18px">
+      <li style="margin-bottom:6px">HTML tags and how they wrap content</li>
+      <li style="margin-bottom:6px">Headings, paragraphs, links, images, and lists</li>
+      <li style="margin-bottom:6px">How a web page is structured (head vs body)</li>
+      <li style="margin-bottom:6px">Your first look at CSS — how it connects to HTML</li>
+    </ul>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" disabled>← Previous</button>
+    <span class="week-position">Week 1 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w2')">Week 2 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 2
+════════════════════════════════════════ -->
+<div id="tab-w2" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>2</span></div>
+      <div><div class="week-title">CSS Styling</div><div class="week-meta">Phase: <span class="phase-label phase-css">CSS</span> &nbsp;·&nbsp; ~5 hrs &nbsp;·&nbsp; 2 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w2">0 / 2 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w2"></div></div>
+    </div>
+    <p>CSS is what makes pages look good — colours, fonts, spacing, backgrounds. This connects directly to what Canva does as a product.</p>
+    <div class="callout" style="margin-top:14px"><div class="callout-title">Canva connection</div><p>Everything in Canva's interface — padding around buttons, font choices, hover colours — is CSS. A developer writes <code>color: #7B2FBE;</code> for the same result you get by clicking a colour picker.</p></div>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="css-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-basics" aria-label="Mark CSS Basics as complete"></td><td><a href="https://teamtreehouse.com/library/css-basics" target="_blank">CSS Basics</a></td><td class="col-dur">~3 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="enhancing-design-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="enhancing-design-css" aria-label="Mark Enhancing Design with CSS as complete"></td><td><a href="https://teamtreehouse.com/library/enhancing-design-with-css" target="_blank">Enhancing Design with CSS</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5 hrs</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w1')">← Week 1</button>
+    <span class="week-position">Week 2 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w3')">Week 3 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 3
+════════════════════════════════════════ -->
+<div id="tab-w3" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>3</span></div>
+      <div><div class="week-title">Layout, DevTools &amp; Mobile</div><div class="week-meta">Phase: <span class="phase-label phase-css">CSS</span> &nbsp;·&nbsp; ~3 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w3">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w3"></div></div>
+    </div>
+    <p>A lighter week — a good moment to consolidate. You'll learn how elements are positioned on a page, how to debug CSS using Chrome DevTools, and an intro to designing for mobile screens first.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="css-layout"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-layout" aria-label="Mark CSS Layout as complete"></td><td><a href="https://teamtreehouse.com/library/css-layout" target="_blank">CSS Layout</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="debugging-css-devtools"><td class="col-check"><input type="checkbox" class="course-check" data-course="debugging-css-devtools" aria-label="Mark Debugging CSS with Chrome DevTools as complete"></td><td><a href="https://teamtreehouse.com/library/debugging-css-with-chrome-devtools" target="_blank">Debugging CSS with Chrome DevTools</a></td><td class="col-dur">35 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="mobile-first-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="mobile-first-css" aria-label="Mark Mobile-First CSS Layout as complete"></td><td><a href="https://teamtreehouse.com/library/mobile-first-css-layout" target="_blank">Mobile-First CSS Layout</a></td><td class="col-dur">38 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~3 hrs</td><td></td></tr></tfoot>
+    </table>
+    <div class="callout tip"><div class="callout-title">Try this after finishing DevTools</div><p>Open <a href="https://canva.com" target="_blank">canva.com</a> in Chrome and press <strong>F12</strong>. Click any element and inspect its CSS in the right-hand panel. After Week 3 you'll understand exactly what you're looking at.</p></div>
+  </div>
+  <div class="callout green"><div class="callout-title">Challenge after Week 3</div><p>Take your Week 1 fan page and bring it to life with CSS — or build a brand new one. Try <strong>Minecraft</strong> or <strong>Grounded</strong>, or whatever game you're into right now.</p><p style="margin-top:10px">Here are some ideas for using CSS colours to match the game's feel:</p><ul style="margin-top:6px;padding-left:18px;font-size:13px"><li style="margin-bottom:6px"><strong>Minecraft:</strong> Use <code style="background:#2d5a1b;color:#a8d060;padding:1px 5px;border-radius:3px">background-color: #2d5a1b</code> for a grassy green, <code style="background:#6b4423;color:#d4a574;padding:1px 5px;border-radius:3px">color: #6b4423</code> for dirt brown, and <code style="background:#1a1a1a;color:#5b8dd9;padding:1px 5px;border-radius:3px">color: #5b8dd9</code> for a diamond blue — then set <code>font-family: monospace</code> for that pixelated blocky text feel.</li><li style="margin-bottom:6px"><strong>Grounded:</strong> Go with deep jungle tones — <code style="background:#1b3a1f;color:#7ec850;padding:1px 5px;border-radius:3px">background-color: #1b3a1f</code> for the undergrowth, <code style="background:#8B4513;color:#f0c060;padding:1px 5px;border-radius:3px">color: #8B4513</code> for earthy orange-brown, and a bright <code style="background:#222;color:#c8e840;padding:1px 5px;border-radius:3px">color: #c8e840</code> for that bug-eye neon yellow.</li><li><strong>Any game:</strong> Open the game, look at the main menu colours, and try to copy that palette with CSS. Use <code>background-color</code>, <code>color</code>, and <code>border</code> to match the vibe — you'll be surprised how much difference three colours makes.</li></ul></div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w2')">← Week 2</button>
+    <span class="week-position">Week 3 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w4')">Week 4 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 4
+════════════════════════════════════════ -->
+<div id="tab-w4" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>4</span></div>
+      <div><div class="week-title">Tables, Forms &amp; CSS Selectors</div><div class="week-meta">Phase: <span class="phase-label phase-html">HTML</span> <span class="phase-label phase-css">CSS</span> &nbsp;·&nbsp; ~5.5 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w4">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w4"></div></div>
+    </div>
+    <p>A heavier week covering three important topics. If it feels like too much, carry CSS Selectors into the start of Week 5 — it's a natural split point.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="html-tables"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-tables" aria-label="Mark HTML Tables as complete"></td><td><a href="https://teamtreehouse.com/library/html-tables" target="_blank">HTML Tables</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="html-forms"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-forms" aria-label="Mark HTML Forms as complete"></td><td><a href="https://teamtreehouse.com/library/html-forms" target="_blank">HTML Forms</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="css-selectors"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-selectors" aria-label="Mark CSS Selectors as complete"></td><td><a href="https://teamtreehouse.com/library/css-selectors" target="_blank">CSS Selectors</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5.5 hrs</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w3')">← Week 3</button>
+    <span class="week-position">Week 4 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w5')">Week 5 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 5
+════════════════════════════════════════ -->
+<div id="tab-w5" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>5</span></div>
+      <div><div class="week-title">Accessibility, Git &amp; JavaScript Starts</div><div class="week-meta">Phase: <span class="phase-label phase-css">CSS</span> <span class="phase-label phase-js">JS</span> &nbsp;·&nbsp; ~3.5 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w5">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w5"></div></div>
+    </div>
+    <p>A lighter week and a natural catch-up point before JavaScript kicks in properly. Accessibility teaches you to build for everyone. Git is short but introduces version control that every engineer uses daily.</p>
+    <div class="callout" style="margin-top:14px"><div class="callout-title">Canva and accessibility</div><p>Canva takes accessibility seriously — the product is used by millions globally, including people relying on screen readers and keyboard-only navigation.</p></div>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="accessibility-web-dev"><td class="col-check"><input type="checkbox" class="course-check" data-course="accessibility-web-dev" aria-label="Mark Accessibility For Web Developers as complete"></td><td><a href="https://teamtreehouse.com/library/accessibility-for-web-developers" target="_blank">Accessibility For Web Developers</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="intro-git"><td class="col-check"><input type="checkbox" class="course-check" data-course="intro-git" aria-label="Mark Introduction to Git as complete"></td><td><a href="https://teamtreehouse.com/library/introduction-to-git" target="_blank">Introduction to Git</a></td><td class="col-dur">&lt;5 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-basics-p1"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-basics-p1" aria-label="Mark JavaScript Basics Part 1 as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-basics" target="_blank">JavaScript Basics (first half)</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~3.5 hrs</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="callout skip"><div class="callout-title">Git feeling confusing? That's completely normal</div><p>Git has a learning curve even for experienced developers. If the concepts aren't clicking — branches, commits, the staging area — don't sit stuck. Reach out to your work experience host. They use Git every single day and can walk you through it in five minutes in person.</p></div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w4')">← Week 4</button>
+    <span class="week-position">Week 5 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w6')">Week 6 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 6
+════════════════════════════════════════ -->
+<div id="tab-w6" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>6</span></div>
+      <div><div class="week-title">JS Basics (finish), Numbers &amp; Functions</div><div class="week-meta">Phase: <span class="phase-label phase-js">JS</span> &nbsp;·&nbsp; ~5.5 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w6">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w6"></div></div>
+    </div>
+    <p>This is where JavaScript gets really familiar if you've used Scratch. You finish JavaScript Basics, then learn numbers and functions — reusable blocks of code just like Scratch's custom blocks.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="javascript-basics-p2"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-basics-p2" aria-label="Mark JavaScript Basics Part 2 as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-basics" target="_blank">JavaScript Basics (second half)</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-numbers"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-numbers" aria-label="Mark JavaScript Numbers as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-numbers" target="_blank">JavaScript Numbers</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-functions"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-functions" aria-label="Mark JavaScript Functions as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-functions" target="_blank">JavaScript Functions</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5.5 hrs</td><td></td></tr></tfoot>
+    </table>
+    <div class="callout tip"><div class="callout-title">Game dev connection</div><p>JavaScript Numbers covers <code>Math.random()</code> — perfect for dice rolls and loot drops. Functions let you write <code>spawnEnemy()</code> and call it whenever you need it, exactly like a Scratch custom block.</p></div>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w5')">← Week 5</button>
+    <span class="week-position">Week 6 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w7')">Week 7 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 7
+════════════════════════════════════════ -->
+<div id="tab-w7" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>7</span></div>
+      <div><div class="week-title">Loops, Arrays &amp; Objects</div><div class="week-meta">Phase: <span class="phase-label phase-js">JS</span> &nbsp;·&nbsp; ~5 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w7">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w7"></div></div>
+    </div>
+    <p>Three core JavaScript data concepts. Loops repeat code automatically. Arrays are ordered lists. Objects group related data together — they map almost perfectly to how game characters and inventory work in Scratch.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="javascript-loops"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-loops" aria-label="Mark JavaScript Loops as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-loops" target="_blank">JavaScript Loops</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-arrays"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-arrays" aria-label="Mark JavaScript Arrays as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-arrays" target="_blank">JavaScript Arrays</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-objects"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-objects" aria-label="Mark JavaScript Objects as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-objects" target="_blank">JavaScript Objects</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5 hrs</td><td></td></tr></tfoot>
+    </table>
+    <div class="callout green"><div class="callout-title">Scratch translation</div><ul><li><strong>Loops</strong> → Scratch's "repeat" and "forever" blocks</li><li><strong>Arrays</strong> → Scratch's lists (yellow blocks)</li><li><strong>Objects</strong> → A sprite with its own variables grouped together</li></ul></div>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w6')">← Week 6</button>
+    <span class="week-position">Week 7 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w8')">Week 8 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 8
+════════════════════════════════════════ -->
+<div id="tab-w8" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>8</span></div>
+      <div><div class="week-title">The DOM, Interactivity &amp; OOP</div><div class="week-meta">Phase: <span class="phase-label phase-js">JS</span> &nbsp;·&nbsp; ~5.5 hrs &nbsp;·&nbsp; 3 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w8">0 / 3 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w8"></div></div>
+    </div>
+    <p>The most challenging week — two of the three courses are Intermediate. The DOM courses teach JavaScript to read and update a page in real time, exactly how Canva responds when you click a design element. OOP is how larger codebases are structured.</p>
+    <div class="callout tip" style="margin-top:14px"><div class="callout-title">Week 8 is tough — that's expected</div><p>Watch OOP JavaScript through once, note what's unclear, keep going, and come back. Exposure matters as much as mastery at this stage.</p></div>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="javascript-dom"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-dom" aria-label="Mark JavaScript and the DOM as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-and-the-dom-2" target="_blank">JavaScript and the DOM</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="interacting-dom"><td class="col-check"><input type="checkbox" class="course-check" data-course="interacting-dom" aria-label="Mark Interacting with the DOM as complete"></td><td><a href="https://teamtreehouse.com/library/interacting-with-the-dom" target="_blank">Interacting with the DOM</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge inter">Intermediate</span></td></tr>
+        <tr data-course="oop-javascript"><td class="col-check"><input type="checkbox" class="course-check" data-course="oop-javascript" aria-label="Mark Object-Oriented JavaScript as complete"></td><td><a href="https://teamtreehouse.com/library/object-oriented-javascript" target="_blank">Object-Oriented JavaScript</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge inter">Intermediate</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~5.5 hrs</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w7')">← Week 7</button>
+    <span class="week-position">Week 8 of 9</span>
+    <button class="nav-btn primary" onclick="showTab('w9')">Week 9 →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     WEEK 9
+════════════════════════════════════════ -->
+<div id="tab-w9" class="tab-panel">
+  <div class="card">
+    <div class="week-header">
+      <div class="week-circle">Week<span>9</span></div>
+      <div><div class="week-title">Data Fetching, Bootstrap, Portfolio &amp; Hosting</div><div class="week-meta">Phase: <span class="phase-label phase-js">JS</span> <span class="phase-label phase-css">CSS</span> &nbsp;·&nbsp; ~4.5 hrs &nbsp;·&nbsp; 4 courses</div></div>
+    </div>
+    <div class="week-progress">
+      <div class="wp-header"><span class="wp-label">Week completion</span><span class="wp-count" id="wpc-w9">0 / 4 courses done</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="wpb-w9"></div></div>
+    </div>
+    <p>The final week. Data Fetching shows how web apps load content from the internet — exactly how Canva loads templates, fonts, and assets. Bootstrap lets you build professional-looking interfaces fast. Then you build a real portfolio and publish it online.</p>
+  </div>
+  <div class="card">
+    <h2>Courses This Week</h2>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="javascript-data-fetching"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-data-fetching" aria-label="Mark JavaScript Data Fetching as complete"></td><td><a href="https://teamtreehouse.com/library/javascript-data-fetching" target="_blank">JavaScript Data Fetching</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="bootstrap-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="bootstrap-basics" aria-label="Mark Bootstrap Basics as complete"></td><td><a href="https://teamtreehouse.com/library/bootstrap-basics" target="_blank">Bootstrap Basics</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="portfolio-html-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="portfolio-html-css" aria-label="Mark Create a Portfolio as complete"></td><td><a href="https://teamtreehouse.com/library/create-a-portfolio-using-html-and-css" target="_blank">Create a Portfolio Using HTML and CSS</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="hosting-websites"><td class="col-check"><input type="checkbox" class="course-check" data-course="hosting-websites" aria-label="Mark Next Steps: Hosting as complete"></td><td><a href="https://teamtreehouse.com/library/next-steps-hosting-your-websites" target="_blank">Next Steps: Hosting Your Websites</a></td><td class="col-dur">&lt;5 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td>Total this week</td><td class="col-dur">~4.5 hrs</td><td></td></tr></tfoot>
+    </table>
+    <div class="callout green"><div class="callout-title">Finish line — publish something online</div><p>By the end of Week 9 you'll know how to put your portfolio on the internet for free using GitHub Pages. Arriving at Canva with a live URL you can share with engineers is a great talking point.</p></div>
+  </div>
+  <div class="callout" style="border-left-color:var(--purple);background:var(--purple-light)"><div class="callout-title">Drop your host an email</div><p>Send your work experience host something from this week — a question you got stuck on, something that surprised you, or a link to something you've built. They'll be glad to hear from you.</p></div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w8')">← Week 8</button>
+    <span class="week-position">Week 9 of 9</span>
+    <button class="nav-btn" onclick="showTab('summary')">Full Summary →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     FULL SUMMARY
+════════════════════════════════════════ -->
+<div id="tab-summary" class="tab-panel">
+  <div class="card">
+    <div class="card-title">All 25 Courses — Complete Summary</div>
+    <p style="margin-bottom:16px">Check off courses as you complete them — progress is saved automatically.</p>
+    <table>
+      <thead><tr><th class="col-check"></th><th>Week</th><th>Phase</th><th>Course</th><th class="col-dur">Duration</th><th class="col-level">Level</th></tr></thead>
+      <tbody>
+        <tr data-course="intro-html-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="intro-html-css" aria-label="Mark Introduction to HTML and CSS as complete"></td><td>1</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/introduction-to-html-and-css" target="_blank">Introduction to HTML and CSS</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="html-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-basics" aria-label="Mark HTML Basics as complete"></td><td>1</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/html-basics" target="_blank">HTML Basics</a></td><td class="col-dur">~3 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="css-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-basics" aria-label="Mark CSS Basics as complete"></td><td>2</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/css-basics" target="_blank">CSS Basics</a></td><td class="col-dur">~3 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="enhancing-design-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="enhancing-design-css" aria-label="Mark Enhancing Design with CSS as complete"></td><td>2</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/enhancing-design-with-css" target="_blank">Enhancing Design with CSS</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="css-layout"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-layout" aria-label="Mark CSS Layout as complete"></td><td>3</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/css-layout" target="_blank">CSS Layout</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="debugging-css-devtools"><td class="col-check"><input type="checkbox" class="course-check" data-course="debugging-css-devtools" aria-label="Mark Debugging CSS with Chrome DevTools as complete"></td><td>3</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/debugging-css-with-chrome-devtools" target="_blank">Debugging CSS with Chrome DevTools</a></td><td class="col-dur">35 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="mobile-first-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="mobile-first-css" aria-label="Mark Mobile-First CSS Layout as complete"></td><td>3</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/mobile-first-css-layout" target="_blank">Mobile-First CSS Layout</a></td><td class="col-dur">38 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="html-tables"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-tables" aria-label="Mark HTML Tables as complete"></td><td>4</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/html-tables" target="_blank">HTML Tables</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="html-forms"><td class="col-check"><input type="checkbox" class="course-check" data-course="html-forms" aria-label="Mark HTML Forms as complete"></td><td>4</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/html-forms" target="_blank">HTML Forms</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="css-selectors"><td class="col-check"><input type="checkbox" class="course-check" data-course="css-selectors" aria-label="Mark CSS Selectors as complete"></td><td>4</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/css-selectors" target="_blank">CSS Selectors</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="accessibility-web-dev"><td class="col-check"><input type="checkbox" class="course-check" data-course="accessibility-web-dev" aria-label="Mark Accessibility For Web Developers as complete"></td><td>5</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/accessibility-for-web-developers" target="_blank">Accessibility For Web Developers</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="intro-git"><td class="col-check"><input type="checkbox" class="course-check" data-course="intro-git" aria-label="Mark Introduction to Git as complete"></td><td>5</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/introduction-to-git" target="_blank">Introduction to Git</a></td><td class="col-dur">&lt;5 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-basics-p1"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-basics-p1" aria-label="Mark JavaScript Basics Part 1 as complete"></td><td>5</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-basics" target="_blank">JavaScript Basics (first half)</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-basics-p2"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-basics-p2" aria-label="Mark JavaScript Basics Part 2 as complete"></td><td>6</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-basics" target="_blank">JavaScript Basics (second half)</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-numbers"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-numbers" aria-label="Mark JavaScript Numbers as complete"></td><td>6</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-numbers" target="_blank">JavaScript Numbers</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-functions"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-functions" aria-label="Mark JavaScript Functions as complete"></td><td>6</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-functions" target="_blank">JavaScript Functions</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-loops"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-loops" aria-label="Mark JavaScript Loops as complete"></td><td>7</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-loops" target="_blank">JavaScript Loops</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-arrays"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-arrays" aria-label="Mark JavaScript Arrays as complete"></td><td>7</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-arrays" target="_blank">JavaScript Arrays</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-objects"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-objects" aria-label="Mark JavaScript Objects as complete"></td><td>7</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-objects" target="_blank">JavaScript Objects</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="javascript-dom"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-dom" aria-label="Mark JavaScript and the DOM as complete"></td><td>8</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-and-the-dom-2" target="_blank">JavaScript and the DOM</a></td><td class="col-dur">~2.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="interacting-dom"><td class="col-check"><input type="checkbox" class="course-check" data-course="interacting-dom" aria-label="Mark Interacting with the DOM as complete"></td><td>8</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/interacting-with-the-dom" target="_blank">Interacting with the DOM</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge inter">Intermediate</span></td></tr>
+        <tr data-course="oop-javascript"><td class="col-check"><input type="checkbox" class="course-check" data-course="oop-javascript" aria-label="Mark Object-Oriented JavaScript as complete"></td><td>8</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/object-oriented-javascript" target="_blank">Object-Oriented JavaScript</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge inter">Intermediate</span></td></tr>
+        <tr data-course="javascript-data-fetching"><td class="col-check"><input type="checkbox" class="course-check" data-course="javascript-data-fetching" aria-label="Mark JavaScript Data Fetching as complete"></td><td>9</td><td><span class="phase-label phase-js">JS</span></td><td><a href="https://teamtreehouse.com/library/javascript-data-fetching" target="_blank">JavaScript Data Fetching</a></td><td class="col-dur">~1.5 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="bootstrap-basics"><td class="col-check"><input type="checkbox" class="course-check" data-course="bootstrap-basics" aria-label="Mark Bootstrap Basics as complete"></td><td>9</td><td><span class="phase-label phase-css">CSS</span></td><td><a href="https://teamtreehouse.com/library/bootstrap-basics" target="_blank">Bootstrap Basics</a></td><td class="col-dur">~2 hrs</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="portfolio-html-css"><td class="col-check"><input type="checkbox" class="course-check" data-course="portfolio-html-css" aria-label="Mark Create a Portfolio as complete"></td><td>9</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/create-a-portfolio-using-html-and-css" target="_blank">Create a Portfolio Using HTML and CSS</a></td><td class="col-dur">~1 hr</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+        <tr data-course="hosting-websites"><td class="col-check"><input type="checkbox" class="course-check" data-course="hosting-websites" aria-label="Mark Hosting Your Websites as complete"></td><td>9</td><td><span class="phase-label phase-html">HTML</span></td><td><a href="https://teamtreehouse.com/library/next-steps-hosting-your-websites" target="_blank">Next Steps: Hosting Your Websites</a></td><td class="col-dur">&lt;5 min</td><td class="col-level"><span class="badge">Beginner</span></td></tr>
+      </tbody>
+      <tfoot><tr><td></td><td colspan="3">Total (Flexbox &amp; Grid skipped)</td><td class="col-dur" style="color:var(--purple)">~37 hrs</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="week-nav">
+    <button class="nav-btn" onclick="showTab('w9')">← Week 9</button>
+    <span class="week-position">Full Summary</span>
+    <button class="nav-btn" onclick="showTab('overview')">Back to Overview →</button>
+  </div>
+</div>
+
+</div><!-- /content-wrap -->
+
+<div class="doc-footer">
+  <div><strong>Front End Web Development Track</strong> &nbsp;·&nbsp; 9 weeks &nbsp;·&nbsp; ~37 hrs &nbsp;·&nbsp; Flexbox &amp; Grid skipped</div>
+  <div><a href="https://teamtreehouse.com/tracks/front-end-web-development" target="_blank">teamtreehouse.com</a></div>
+</div>
+
+<script>
+  // ── DATA ──────────────────────────────────────────────────
+  const WEEK_COURSES = {
+    w1: ['intro-html-css', 'html-basics'],
+    w2: ['css-basics', 'enhancing-design-css'],
+    w3: ['css-layout', 'debugging-css-devtools', 'mobile-first-css'],
+    w4: ['html-tables', 'html-forms', 'css-selectors'],
+    w5: ['accessibility-web-dev', 'intro-git', 'javascript-basics-p1'],
+    w6: ['javascript-basics-p2', 'javascript-numbers', 'javascript-functions'],
+    w7: ['javascript-loops', 'javascript-arrays', 'javascript-objects'],
+    w8: ['javascript-dom', 'interacting-dom', 'oop-javascript'],
+    w9: ['javascript-data-fetching', 'bootstrap-basics', 'portfolio-html-css', 'hosting-websites']
+  };
+  const ALL_COURSES = Object.values(WEEK_COURSES).flat(); // 25 total
+  const STORAGE_KEY = 'canva-plan-v1';
+
+  // ── STORAGE ───────────────────────────────────────────────
+  function getCompleted() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function setCompleted(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // ── RENDER ────────────────────────────────────────────────
+  function updateAll() {
+    const completed = getCompleted();
+
+    // Sync every checkbox + row styling (deduped by course id)
+    const seen = new Set();
+    document.querySelectorAll('.course-check').forEach(cb => {
+      const id = cb.dataset.course;
+      cb.checked = !!completed[id];
+      const row = cb.closest('tr[data-course]');
+      if (row) row.classList.toggle('row-done', !!completed[id]);
+      seen.add(id);
+    });
+
+    // Per-week progress
+    let totalDone = 0;
+    Object.entries(WEEK_COURSES).forEach(([wk, courses]) => {
+      const done = courses.filter(c => completed[c]).length;
+      const total = courses.length;
+      totalDone += done;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      const allDone = done === total;
+
+      // Progress bar + count in week tab
+      const bar = document.getElementById('wpb-' + wk);
+      if (bar) {
+        bar.style.width = pct + '%';
+        bar.classList.toggle('done', allDone);
+      }
+      const count = document.getElementById('wpc-' + wk);
+      if (count) count.textContent = `${done} / ${total} courses done`;
+
+      // Tab dot
+      const dot = document.getElementById('dot-' + wk);
+      if (dot) {
+        dot.classList.toggle('done', allDone);
+        dot.textContent = allDone ? '✓' : wk.replace('w', '');
+      }
+
+      // Overview week card
+      const card = document.querySelector(`.week-card[data-week="${wk}"]`);
+      if (card) card.classList.toggle('card-done', allDone);
+      const wc = document.getElementById('wc-' + wk);
+      if (wc) {
+        if (allDone) {
+          wc.textContent = '✓ Complete';
+          wc.className = 'wk-completion all-done';
+        } else if (done > 0) {
+          wc.textContent = `${done}/${total} done`;
+          wc.className = 'wk-completion in-progress';
+        } else {
+          wc.textContent = `0/${total}`;
+          wc.className = 'wk-completion';
+        }
+      }
+    });
+
+    // Global progress bar
+    const pct = Math.round((totalDone / ALL_COURSES.length) * 100);
+    const gpBar = document.getElementById('gp-bar');
+    if (gpBar) gpBar.style.width = pct + '%';
+    const gpCount = document.getElementById('gp-count');
+    if (gpCount) gpCount.textContent = totalDone;
+    const gpPct = document.getElementById('gp-pct');
+    if (gpPct) gpPct.textContent = pct;
+  }
+
+  // ── CHECKBOX HANDLER ──────────────────────────────────────
+  document.addEventListener('change', e => {
+    if (!e.target.classList.contains('course-check')) return;
+    const id = e.target.dataset.course;
+    const completed = getCompleted();
+    completed[id] = e.target.checked;
+    setCompleted(completed);
+    updateAll();
+  });
+
+  // ── TAB SWITCHING ─────────────────────────────────────────
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    const panel = document.getElementById('tab-' + id);
+    if (panel) panel.classList.add('active');
+    const btn = document.querySelector(`.tab-btn[data-tab="${id}"]`);
+    if (btn) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── INIT ──────────────────────────────────────────────────
+  updateAll();
+</script>
+</body>
+</html>
