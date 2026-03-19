@@ -877,6 +877,8 @@
   });
 
   // ── TAB SWITCHING ─────────────────────────────────────────
+  const TAB_KEY = 'canva-plan-tab-v1';
+
   function showTab(id) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => {
@@ -892,10 +894,15 @@
       btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    try { localStorage.setItem(TAB_KEY, id); } catch {}
   }
 
   // ── INIT ──────────────────────────────────────────────────
   updateAll();
+  try {
+    const savedTab = localStorage.getItem(TAB_KEY);
+    if (savedTab && document.getElementById('tab-' + savedTab)) showTab(savedTab);
+  } catch {}
 </script>
 </body>
 </html>
